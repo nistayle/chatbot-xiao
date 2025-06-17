@@ -14,7 +14,7 @@ Chatbot ini dibangun menggunakan:
 ---
 
 ## 🖥️ Tampilan
-![Screenshot Chatbot](https://via.placeholder.com/800x400?text=Chatbot+Anisa+Screenshot)
+![Screenshot Chatbot](screenshot(210).png)
 
 ---
 
