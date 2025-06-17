@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xiao: The new Nistayle's Chatbot</title>
+  <style>
+    * {
+    box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #dbe6f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #chatbox {
+      width: 100%;
+      max-width: 480px;
+      height: 90vh;
+      background: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    #messages {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      scroll-behavior: smooth;
+    }
+
+    .message-container {
+      display: flex;
+      width: 100%;
+    }
+
+    .user-container {
+      justify-content: flex-end;
+    }
+
+    .bot-container {
+      justify-content: flex-start;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.7rem 1rem;
+      border-radius: 16px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      background: #d0ebff;
+      color: #003865;
+      border-bottom-right-radius: 2px;
+    }
+
+    .bot {
+      background: #f1f1f1;
+      color: #1a1a1a;
+      border-bottom-left-radius: 2px;
+    }
+
+    #input-area {
+      display: flex;
+      padding: 0.75rem;
+      border-top: 1px solid #ddd;
+      gap: 0.5rem;
+    }
+
+    #input {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.6rem 1rem;
+      background: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #357ac9;
+    }
+
+    /* Responsive: kecilin font/bubble di layar kecil */
+    @media (max-width: 400px) {
+      .message {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.9rem;
+      }
+
+      #input {
+        font-size: 0.9rem;
+      }
+
+      button {
+        font-size: 0.85rem;
+      }
+    }
+    </style>
+
+</head>
+<body>
+  <div id="chatbox">
+    <div id="messages"></div>
+    <div id="input-area">
+      <input type="text" id="input" placeholder="Tulis pesan..." onkeydown="if(event.key==='Enter') sendMessage()"/>
+      <button onclick="sendMessage()">Kirim</button>
+    </div>
+  </div>
+
+  <script>
+    const messages = document.getElementById("messages");
+
+    function addMessage(text, sender, useTypingEffect = false) {
+      const container = document.createElement("div");
+      container.className = "message-container " + (sender === "user" ? "user-container" : "bot-container");
+
+      const bubble = document.createElement("div");
+      bubble.className = "message " + sender;
+
+      container.appendChild(bubble);
+      messages.appendChild(container);
+      messages.scrollTop = messages.scrollHeight;
+
+      if (useTypingEffect) {
+        let i = 0;
+        const speed = 20;
+        const interval = setInterval(() => {
+          bubble.textContent += text.charAt(i);
+          i++;
+          if (i >= text.length) clearInterval(interval);
+        }, speed);
+      } else {
+        bubble.innerText = text;
+      }
+
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById("input");
+      const userText = input.value.trim();
+      if (userText === "") return;
+
+      addMessage(userText, "user");
+      input.value = "";
+
+      fetch("/get?msg=" + encodeURIComponent(userText))
+        .then(res => res.text())
+        .then(botText => {
+          addMessage(botText, "bot", true);
+        });
+    }
+
+    // Pesan awal
+    window.onload = () => {
+      addMessage("Halo! 👋 Aku Xiao. Silakan tanya apa saja 😊", "bot", true);
+    };
+  </script>
+</body>
+</html>

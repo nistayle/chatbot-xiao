@@ -1,0 +1,21 @@
+{
+  "greeting": {
+    "patterns": ["halo", "hai", "hello", "hi"],
+    "responses": ["Hai juga!", "Halo!", "Halo, ada yang bisa saya bantu?"]
+  },
+  "identity": {
+    "patterns": ["siapa kamu", "kamu siapa", "kenalin dong"],
+    "responses": ["Aku chatbot sederhana buatan Anisa!", "Saya asisten virtual bikinan Anisa!"]
+  },
+  "time": {
+    "patterns": ["jam berapa", "pukul berapa", "sekarang jam berapa"],
+    "responses": ["Sebentar, aku cek dulu...", "Bentar ya, aku lihat jamnya."]
+  },
+  "thanks": {
+    "patterns": ["terima kasih", "makasih", "thanks"],
+    "responses": ["Sama-sama!", "Senang bisa bantu 😊", "Kapan-kapan ngobrol lagi ya!"]
+  },
+  "fallback": {
+    "responses": ["Maaf, aku belum ngerti maksudmu 😢", "Coba tanya yang lain, ya!"]
+  }
+}
