@@ -14,7 +14,7 @@ Chatbot ini dibangun menggunakan:
 ---
 
 ## 🖥️ Tampilan
-![Screenshot Chatbot](screenshot(210).png)
+![Screenshot Chatbot](Screenshot(210).png)
 
 ---
 
